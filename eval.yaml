@@ -4,8 +4,8 @@ skill: rfe.speedrun
 
 # Execution — how the skill processes test cases (runner-agnostic)
 execution:
-  mode: batch
-  arguments: --headless --dry-run --input batch.yaml
+  mode: case
+  arguments: --headless --dry-run --input input.yaml
   timeout: 7200          # 2 hours — opus with 20 cases + splits needs ~60 min
   max_budget_usd: 100.0  # Per-invocation cost cap
 
@@ -142,7 +142,7 @@ outputs:
 traces:
   stdout: true
   stderr: true
-  events: false
+  events: true
   metrics: true
 
 judges:
