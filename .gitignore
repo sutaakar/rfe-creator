@@ -36,3 +36,4 @@ tmp/
 
 # Logs
 *.log
+eval/runs/
