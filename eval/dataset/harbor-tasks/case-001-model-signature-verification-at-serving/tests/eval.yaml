@@ -10,6 +10,16 @@ execution:
 runner:
   type: claude-code
   effort: high
+  system_prompt: |
+    HOW THE SKILL TOOL WORKS: The Skill tool loads instructions into this
+    conversation. It does NOT execute code or create files. When you call
+    Skill, the tool returns "Launching skill". Nothing was launched — the
+    skill instructions were injected as new text. You must execute those
+    instructions yourself using Bash, Read, Write, and other tools.
+    After a Skill call: find Step 1 in the loaded instructions and execute
+    it immediately. NEVER call the same Skill again. NEVER say "waiting for
+    skill to finish". NEVER check if the skill produced output — it produced
+    nothing. Execute the loaded instructions step by step.
 models:
   skill: claude-opus-4-6
   subagent: claude-opus-4-6

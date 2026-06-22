@@ -63,7 +63,7 @@ python3 scripts/next_rfe_id.py $N   # prints RFE-001 through RFE-<N>
 
 If the input is a single dict (not a list), treat it as one entry — extract its `prompt`, `priority`, and optional `clarifying_context` fields.
 
-For each entry, launch an Agent to invoke `/rfe.create`. Pass the pre-assigned ID so each Agent knows which ID to use:
+For each RFE, you MUST use the Agent tool (not the Skill tool) to invoke `/rfe.create`. Do not set `subagent_type`. Pass the pre-assigned ID so each Agent knows which ID to use:
 
 ```
 Agent for entry 1:  /rfe.create --headless --rfe-id RFE-001 [--priority <priority>] <prompt>
