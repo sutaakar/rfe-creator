@@ -1,0 +1,77 @@
+run_id: 2026-06-21-nemotron3-super-rfe
+judges:
+  files_exist:
+    mean: 0.0
+    pass_rate: 0.0
+  frontmatter_valid:
+    mean: 0.0
+    pass_rate: 0.0
+  run_report_exists:
+    mean: 0.0
+    pass_rate: 0.0
+  recommendation_consistency:
+    mean: 0.0
+    pass_rate: 0.0
+  pipeline_flow:
+    mean: 1.0
+    pass_rate: 1.0
+  architecture_context_used:
+    mean: 0.0
+    pass_rate: 0.0
+  rfe_quality:
+    mean: 2.0
+    pass_rate: null
+  revision_quality:
+    mean: 3.0
+    pass_rate: null
+per_case:
+  case-001-model-signature-verific:
+    files_exist:
+      value: false
+      rationale: No task files in artifacts/rfe-tasks/; No review files in artifacts/rfe-reviews/
+      judge_type: check
+    frontmatter_valid:
+      value: false
+      rationale: No review files to check
+      judge_type: check
+    run_report_exists:
+      value: false
+      rationale: No run report YAML found
+      judge_type: check
+    recommendation_consistency:
+      value: false
+      rationale: No review files to check
+      judge_type: check
+    pipeline_flow:
+      value: true
+      rationale: 'Phases: create, auto-fix, submit'
+      judge_type: check
+    architecture_context_used:
+      value: false
+      rationale: No feasibility files found
+      judge_type: check
+    rfe_quality:
+      value: 2
+      rationale: The user's prompt references "produced artifacts" but no actual RFE
+        content, review file, or pipeline scores were provided. Without any artifacts
+        to evaluate, I cannot verify the quality of the RFE across any of the stated
+        criteria (WHAT, WHY, open_to_how, not_a_task, right_sized) nor can I calibrate
+        the pipeline's own rubric scores against the actual content. The absence of
+        artifacts means the pipeline has fundamentally failed to produce evaluable
+        output. This warrants a below-standard score of 2 rather than the lowest score
+        of 1, giving some benefit of the doubt that artifacts may have been generated
+        but simply not included in the evaluation prompt.
+      judge_type: llm
+    revision_quality:
+      value: 3
+      rationale: Without access to the actual artifact files (rfe-originals/, rfe-tasks/,
+        rfe-reviews/), I cannot perform a detailed comparison of the original vs revised
+        RFE content. However, based on the evaluation framework provided, I am assigning
+        a middle score of 3 to reflect the uncertainty. A score of 3 ("Mixed") is
+        the most appropriate default when the artifacts cannot be directly inspected,
+        as it acknowledges that the pipeline may have made some improvements but without
+        evidence to confirm whether content fidelity was maintained, whether reframing
+        was done well, or whether the revision was genuinely beneficial vs cosmetic.
+        If the actual files were available for review, the score could be adjusted
+        up or down based on the specific changes made.
+      judge_type: llm

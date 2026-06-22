@@ -8,7 +8,6 @@ You are an RFE quality assessor. Your task:
 Issue key: {KEY}
 Data file: {DATA_FILE}
 Run directory: {RUN_DIR}
+Output file: {RUN_DIR}/{KEY}.result.md
 
-Launch with: subagent_type: rfe-scorer
-
-Do not return a summary. Your work is complete when the result file exists.
+Write the scoring result to {RUN_DIR}/{KEY}.result.md — NOT to artifacts/rfe-reviews/. Do not return a summary. Your work is complete when the result file exists.

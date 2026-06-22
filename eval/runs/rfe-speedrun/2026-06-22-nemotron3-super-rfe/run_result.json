@@ -1,0 +1,14 @@
+{
+  "exit_code": 0,
+  "execution_mode": "harbor",
+  "agent": "harbor:claude-code",
+  "agent_version": null,
+  "model": "nemotron3-super-rfe",
+  "num_cases": 0,
+  "num_turns": null,
+  "duration_s": 716.790992,
+  "mean_reward": null,
+  "cost_usd": null,
+  "token_usage": null,
+  "harbor_job_dir": "tmp/harbor-jobs/2026-06-22__09-03-16"
+}

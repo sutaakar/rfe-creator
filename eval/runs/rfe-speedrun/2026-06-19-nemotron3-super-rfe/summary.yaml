@@ -1,0 +1,77 @@
+run_id: 2026-06-19-nemotron3-super-rfe
+judges:
+  files_exist:
+    mean: 0.0
+    pass_rate: 0.0
+  frontmatter_valid:
+    mean: 0.0
+    pass_rate: 0.0
+  run_report_exists:
+    mean: 0.0
+    pass_rate: 0.0
+  recommendation_consistency:
+    mean: 0.0
+    pass_rate: 0.0
+  pipeline_flow:
+    mean: 1.0
+    pass_rate: 1.0
+  architecture_context_used:
+    mean: 0.0
+    pass_rate: 0.0
+  rfe_quality:
+    mean: 2.0
+    pass_rate: null
+  revision_quality:
+    mean: 3.0
+    pass_rate: null
+per_case:
+  case-001-model-signature-verific:
+    files_exist:
+      value: false
+      rationale: No task files in artifacts/rfe-tasks/; No review files in artifacts/rfe-reviews/
+      judge_type: check
+    frontmatter_valid:
+      value: false
+      rationale: No review files to check
+      judge_type: check
+    run_report_exists:
+      value: false
+      rationale: No run report YAML found
+      judge_type: check
+    recommendation_consistency:
+      value: false
+      rationale: No review files to check
+      judge_type: check
+    pipeline_flow:
+      value: true
+      rationale: 'Phases: create, auto-fix, submit'
+      judge_type: check
+    architecture_context_used:
+      value: false
+      rationale: No feasibility files found
+      judge_type: check
+    rfe_quality:
+      value: 2
+      rationale: The user provided no actual RFE artifacts (no RFE content, no review
+        file, no pipeline scores) to evaluate. The prompt says "Here are the produced
+        artifacts:" but nothing follows. Without any content to assess, I cannot verify
+        the quality of the RFE against the stated criteria, nor can I check the pipeline's
+        self-calibration scores. This represents a fundamental failure of the pipeline
+        to produce visible/accessible artifacts. Since no RFE content is present,
+        the output fails basic RFE standards. However, I give a 2 rather than 1 because
+        the absence of artifacts may be a submission/formatting error rather than
+        a pipeline quality issue, and I cannot definitively confirm the pipeline itself
+        is at fault versus the evaluation setup.
+      judge_type: llm
+    revision_quality:
+      value: 3
+      rationale: Without access to the actual artifact files (rfe-originals/, rfe-tasks/,
+        rfe-reviews/), I cannot perform a detailed comparison of the original vs.
+        revised RFE content, nor can I verify the review frontmatter for auto_revised
+        and revision_cycles values. Based on the information available in the prompt
+        alone, I cannot determine whether a revision was performed or skipped, what
+        changes were made, or whether content fidelity was maintained. I am assigning
+        a middle score of 3 to reflect this uncertainty — there is insufficient evidence
+        to confirm the revision was either beneficial or harmful. If the actual artifacts
+        were provided, I could give a more precise assessment.
+      judge_type: llm
