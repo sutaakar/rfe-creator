@@ -848,19 +848,21 @@ def cmd_next_action(args):
             # Write wave IDs
             _write_ids(WAVE_IDS_FILE, wave_ids)
 
-            # Build agent entries
+            # Build agent entries with pre-rendered prompts
             agents = []
             for rfe_id in wave_ids:
                 # Main agent
                 entry = {}
                 if config.get("subagent_type"):
                     entry["subagent_type"] = config["subagent_type"]
-                entry["prompt_file"] = config["prompt"]
-                # Build vars string
                 var_lines = []
                 for k, v in config.get("vars", {}).items():
                     var_lines.append(f"{k}={v.replace('{ID}', rfe_id)}")
-                entry["vars"] = "\n".join(var_lines) + "\n"
+                prompt_file = config["prompt"]
+                entry["prompt"] = (
+                    "\n".join(var_lines) + "\n\n"
+                    f"Read {prompt_file} and follow all instructions exactly."
+                )
                 agents.append(entry)
 
                 # Parallel agents
@@ -868,11 +870,14 @@ def cmd_next_action(args):
                     pentry = {}
                     if par.get("subagent_type"):
                         pentry["subagent_type"] = par["subagent_type"]
-                    pentry["prompt_file"] = par["prompt"]
                     pvar_lines = []
                     for k, v in par.get("vars", {}).items():
                         pvar_lines.append(f"{k}={v.replace('{ID}', rfe_id)}")
-                    pentry["vars"] = "\n".join(pvar_lines) + "\n"
+                    par_prompt_file = par["prompt"]
+                    pentry["prompt"] = (
+                        "\n".join(pvar_lines) + "\n\n"
+                        f"Read {par_prompt_file} and follow all instructions exactly."
+                    )
                     agents.append(pentry)
 
             msg = f"{phase}: wave {wave_num}/{total_waves} ({len(wave_ids)} IDs)"

@@ -29,9 +29,11 @@ Check if `JIRA_SERVER`, `JIRA_USER`, and `JIRA_TOKEN` environment variables are 
 
 ## Step 1: Run Submission
 
+Pass `--dry-run` if specified in `$ARGUMENTS`.
+
 ```bash
 TIMESTAMP=$(python3 scripts/state.py timestamp)
-python3 scripts/submit.py [--dry-run] [--artifacts-dir artifacts] --generate-report --report-timestamp "$TIMESTAMP"
+python3 scripts/submit.py --artifacts-dir artifacts --generate-report --report-timestamp "$TIMESTAMP"
 ```
 
 ## Step 2: Report Results

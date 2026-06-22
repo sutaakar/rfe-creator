@@ -97,10 +97,7 @@ Parse the YAML output for: `action`, `phase`, `message`, `agents`.
 
 **run_script**: Run `python3 scripts/pipeline_state.py run-phase`. Go to step 1.
 
-**launch_wave**: For each agent in the `agents` list:
-- Build prompt: `"<vars>\n\nRead <prompt_file> and follow all instructions exactly."`
-- `vars` are pre-rendered KEY=VALUE lines with `{ID}` already substituted.
-- Launch as background Agent (with `subagent_type` if present).
+**launch_wave**: For each agent in the `agents` list, launch a background Agent using the `prompt` field directly (it is pre-rendered with vars and instructions). Set `subagent_type` if present.
 
 Then wait for completion:
 
@@ -119,14 +116,16 @@ action: launch_wave
 phase: ASSESS
 message: "ASSESS: wave 1/2 (5 IDs)"
 agents:
-  - prompt_file: .claude/skills/rfe.review/prompts/assess-agent.md
-    vars: |
+  - prompt: |
       DATA_FILE=/tmp/rfe-assess/single/RHAIRFE-1234.md
       RUN_DIR=/tmp/rfe-assess/single
       PROMPT_PATH=.context/assess-rfe/scripts/agent_prompt.md
-  - prompt_file: .claude/skills/rfe-feasibility-review/SKILL.md
-    vars: |
+
+      Read .claude/skills/rfe.review/prompts/assess-agent.md and follow all instructions exactly.
+  - prompt: |
       ID=RHAIRFE-1234
+
+      Read .claude/skills/rfe-feasibility-review/SKILL.md and follow all instructions exactly.
 ```
 
 ## Teardown
