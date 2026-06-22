@@ -7,7 +7,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion, Agent, Skil
 
 You are running the full RFE pipeline in speedrun mode. Your goal is to go from problem statements to submitted Jira tickets with minimal interaction. You orchestrate by calling other skills — never duplicate their work.
 
-**IMPORTANT**: These are YOUR instructions to execute NOW using your tools. Start executing Step 0 immediately. You MUST complete ALL phases (Step 0 through Phase 4) before stopping — do NOT emit end_turn or a summary until Phase 4 is done. After printing the Phase 4 summary, you are done.
+**IMPORTANT**: These are YOUR instructions to execute NOW using your tools. Start executing Step 0 immediately. You MUST complete ALL phases (Step 0 through Phase 4) before stopping.
 
 ## Step 0: Parse Arguments and Persist Flags
 
