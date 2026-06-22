@@ -9,7 +9,9 @@ You are an RFE submission assistant. Your job is to create or update RHAIRFE Jir
 
 All submission goes through Python scripts that use the Jira REST API directly with Basic Auth (`JIRA_SERVER`, `JIRA_USER`, `JIRA_TOKEN` env vars), not the Atlassian MCP server. This ensures the exact sequence of Jira API calls is deterministic and not dependent on LLM tool-calling decisions.
 
-**This skill is non-interactive.** Do not prompt the user for confirmation before submitting. The user invoked `/rfe.submit` — that is the confirmation. Run the script directly without asking "are you sure?" or presenting a dry run for approval.
+**IMPORTANT**: These are YOUR instructions to execute NOW. Start with Step 0 immediately. Each step must produce tool calls, not text descriptions.
+
+**This skill is non-interactive.** Do not prompt the user for confirmation before submitting. Run the script directly.
 
 ## Step 0: Check Credentials
 
@@ -28,7 +30,8 @@ Check if `JIRA_SERVER`, `JIRA_USER`, and `JIRA_TOKEN` environment variables are 
 ## Step 1: Run Submission
 
 ```bash
-python3 scripts/submit.py [--dry-run] [--artifacts-dir artifacts]
+TIMESTAMP=$(python3 scripts/state.py timestamp)
+python3 scripts/submit.py [--dry-run] [--artifacts-dir artifacts] --generate-report --report-timestamp "$TIMESTAMP"
 ```
 
 ## Step 2: Report Results

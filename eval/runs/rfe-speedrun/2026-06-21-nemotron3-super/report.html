@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rfe-speedrun — 2026-06-21-nemotron3-super</title>
+<script>
+(function () {
+  try {
+    var stored = localStorage.getItem('eval-report-theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = stored || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+<style>
+:root {
+  --bg: #cbd1da;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --surface-3: #e2e8f0;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-soft: #475569;
+  --accent: #2563eb;
+  --accent-strong: #1e3a8a;
+  --accent-soft: #dbeafe;
+  --success: #16a34a;
+  --success-soft: #dcfce7;
+  --success-border: #86efac;
+  --danger: #dc2626;
+  --danger-soft: #fee2e2;
+  --danger-border: #fca5a5;
+  --warning: #d97706;
+  --warning-soft: #fef3c7;
+  --warning-border: #fcd34d;
+  --neutral-soft: #f1f5f9;
+  --neutral-border: #cbd5e1;
+  --code-bg: #eef2f7;
+  --shadow: 0 1px 3px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
+  --shadow-strong: 0 4px 12px rgba(15,23,42,.08), 0 1px 3px rgba(15,23,42,.05);
+  --diff-add-bg: #e6ffec;
+  --diff-add-strong: #acf2bd;
+  --diff-del-bg: #ffeef0;
+  --diff-del-strong: #fdb8c0;
+  --diff-hdr-bg: #f0f0f0;
+  --case-pass-accent: #16a34a;
+  --case-fail-accent: #dc2626;
+  --case-pw-a-accent: #16a34a;
+  --case-pw-b-accent: #dc2626;
+  --case-pw-tie-accent: #d97706;
+  --case-pw-error-accent: #94a3b8;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --surface: #0f1729;
+  --surface-2: #162033;
+  --surface-3: #1e293b;
+  --border: #1e2c44;
+  --border-strong: #334155;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-soft: #cbd5e1;
+  --accent: #60a5fa;
+  --accent-strong: #93c5fd;
+  --accent-soft: #1e3a8a;
+  --success: #4ade80;
+  --success-soft: #14532d;
+  --success-border: #166534;
+  --danger: #f87171;
+  --danger-soft: #7f1d1d;
+  --danger-border: #991b1b;
+  --warning: #fbbf24;
+  --warning-soft: #78350f;
+  --warning-border: #92400e;
+  --neutral-soft: #1e293b;
+  --neutral-border: #334155;
+  --code-bg: #1e293b;
+  --shadow: 0 1px 3px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.3);
+  --shadow-strong: 0 4px 14px rgba(0,0,0,.5), 0 1px 3px rgba(0,0,0,.35);
+  --diff-add-bg: rgba(74,222,128,.08);
+  --diff-add-strong: rgba(74,222,128,.28);
+  --diff-del-bg: rgba(248,113,113,.08);
+  --diff-del-strong: rgba(248,113,113,.28);
+  --diff-hdr-bg: #1e293b;
+  --case-pass-accent: #4ade80;
+  --case-fail-accent: #f87171;
+  --case-pw-a-accent: #4ade80;
+  --case-pw-b-accent: #f87171;
+  --case-pw-tie-accent: #fbbf24;
+  --case-pw-error-accent: #64748b;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 15px; line-height: 1.55; max-width: 1200px; margin: 0 auto; padding: 1.5em 1.5em 4em; color: var(--text); background: var(--bg); transition: background-color .15s ease, color .15s ease; }
+h1 { padding-bottom: 0; margin: 0 0 0.55em; font-size: 1.9em; letter-spacing: -0.015em; font-weight: 700; color: var(--accent-strong); }
+.report-header { margin: 0 0 1.6em; padding-bottom: 1.1em; border-bottom: 2px solid var(--border-strong); }
+.header-meta { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+.meta-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; padding: 5px 13px 5px 12px; font-size: 0.95em; color: var(--text); box-shadow: var(--shadow); line-height: 1.4; }
+.meta-chip .meta-label { font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 700; }
+.meta-chip code { background: var(--code-bg); padding: 1px 7px; border-radius: 4px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92em; color: var(--text); }
+h2 { margin-top: 1.5em; letter-spacing: -0.005em; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; margin: 1em 0; font-variant-numeric: tabular-nums; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+th, td { border-bottom: 1px solid var(--border); padding: 9px 12px; text-align: left; }
+tr:last-child td { border-bottom: none; }
+th { background: var(--surface-2); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); font-weight: 600; }
+tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 50%, transparent); }
+tbody tr:hover td { background: var(--accent-soft); }
+.pass, .fail, .warn, .skip { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.85em; font-weight: 600; line-height: 1.4; border: 1px solid transparent; }
+.pass { color: var(--success); background: var(--success-soft); border-color: var(--success-border); }
+.fail { color: var(--danger); background: var(--danger-soft); border-color: var(--danger-border); }
+.warn { color: var(--warning); background: var(--warning-soft); border-color: var(--warning-border); }
+.skip { color: var(--text-muted); background: var(--neutral-soft); border-color: var(--neutral-border); font-weight: 500; }
+.metric-row td:last-child { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.judge-type { font-size: 0.85em; color: var(--text-muted); }
+.subsection-heading { margin-top: 1.4em; font-size: 0.95em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.model-heading { margin: 1.2em 0 0.4em; font-size: 0.92em; font-weight: 600; color: var(--text-soft); }
+.model-heading code { background: var(--code-bg); padding: 2px 8px; border-radius: 4px; font-size: 0.95em; font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--text); }
+.config-table { table-layout: fixed; }
+.config-table th:first-child, .config-table td:first-child { width: 22%; }
+.config-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.9em 1.6em; margin: 0.4em 0 0.8em; padding: 0; }
+.kv { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.kv dt { font-size: 0.72em; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; margin: 0; }
+.kv dd { margin: 0; font-weight: 500; font-variant-numeric: tabular-nums; word-break: break-word; line-height: 1.35; color: var(--text); }
+.kv dd.bl { color: var(--text-muted); font-size: 0.85em; font-weight: 400; }
+.kv dd.bl::before { content: "vs "; opacity: 0.7; }
+.kv dd.bl .delta { font-weight: 600; font-size: 0.95em; padding-left: 4px; }
+details.eval-params { margin: 1.2em 0 0; padding: 0; }
+details.eval-params > summary { cursor: pointer; padding: 6px 0; list-style: none; display: flex; align-items: center; gap: 8px; user-select: none; min-width: 0; }
+details.eval-params > summary::-webkit-details-marker { display: none; }
+details.eval-params > summary::before { content: "▸"; font-size: 0.9em; transition: transform .15s ease; display: inline-block; color: var(--text-muted); flex-shrink: 0; }
+details.eval-params[open] > summary::before { transform: rotate(90deg); }
+details.eval-params > summary:hover .eval-params-label { color: var(--accent); }
+.eval-params-label { font-size: 0.95em; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; flex-shrink: 0; }
+.eval-params-preview { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.85em; color: var(--text-soft); padding-left: 8px; border-left: 1px solid var(--border-strong); margin-left: 2px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+details.eval-params[open] .eval-params-preview { display: none; }
+details.eval-params > .config-grid { margin-top: 0.5em; }
+details.eval-params > .run-command { margin: 0.6em 0 0; }
+.run-command { margin: 0.4em 0 1em; }
+.run-command-label { display: block; font-size: 0.72em; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+.run-command pre { margin: 0; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; overflow-x: auto; font-size: 0.85em; line-height: 1.4; }
+.run-command code { background: transparent; padding: 0; font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--text); white-space: pre; }
+.usage-table th code { background: var(--code-bg); padding: 2px 7px; border-radius: 4px; font-size: 0.95em; font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--text); text-transform: none; letter-spacing: 0; font-weight: 500; }
+.usage-table td { font-variant-numeric: tabular-nums; }
+.usage-table .cur-val { display: block; font-weight: 500; }
+.usage-table .bl-val { display: block; font-size: 0.82em; color: var(--text-muted); margin-top: 1px; }
+.usage-table .bl-val::before { content: "vs "; opacity: 0.7; }
+.usage-table .delta { font-weight: 600; font-size: 0.9em; padding-left: 4px; }
+.delta-good { color: var(--success); }
+.delta-bad { color: var(--danger); }
+.delta-flat { color: var(--text-muted); font-weight: 500; }
+.baseline-row td { background: var(--surface-2); font-style: italic; color: var(--text-muted); }
+.rationale { font-size: 0.88em; color: var(--text-soft); }
+.rationale p { margin: 0 0 0.5em; line-height: 1.5; }
+.rationale p:last-child { margin-bottom: 0; }
+.rationale ul, .rationale ol { margin: 0.3em 0 0.5em 1.2em; padding: 0; }
+.rationale li { margin: 0.2em 0; }
+.rationale code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; font-size: 0.9em; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.rationale strong { color: var(--text); }
+details.case { margin: 1em 0; border: 1px solid var(--border); border-left-width: 4px; border-radius: 8px; padding: 1em 1.2em; background: var(--surface); box-shadow: var(--shadow); }
+details.case.case-pass { border-left-color: var(--case-pass-accent); }
+details.case.case-fail { border-left-color: var(--case-fail-accent); }
+details.case.case-pw-a { border-left-color: var(--case-pw-a-accent); }
+details.case.case-pw-b { border-left-color: var(--case-pw-b-accent); }
+details.case.case-pw-tie { border-left-color: var(--case-pw-tie-accent); }
+details.case.case-pw-error { border-left-color: var(--case-pw-error-accent); }
+details.case > summary { cursor: pointer; font-weight: 600; padding: 0.2em 0; font-size: 1.02em; list-style: none; display: flex; align-items: center; gap: 0.6em; }
+details.case > summary::-webkit-details-marker { display: none; }
+details.case > summary::before { content: "▸"; color: var(--text-muted); transition: transform .15s ease; display: inline-block; }
+details.case[open] > summary::before { transform: rotate(90deg); }
+details.case > summary:hover { color: var(--accent); }
+.info-box { background: var(--accent-soft); border: 1px solid var(--border); border-radius: 6px; padding: 0.8em 1em; margin: 0.6em 0; font-size: 0.9em; }
+.feedback-box { background: var(--warning-soft); border: 1px solid var(--warning-border); border-radius: 6px; padding: 0.8em 1em; margin: 0.6em 0; font-size: 0.9em; color: var(--text); }
+.file-badge { display: inline-block; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82em; background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 5px; padding: 3px 10px; margin: 1em 0 0.5em 0; color: var(--text-soft); }
+.pw-badge { display: inline-block; font-size: 0.78em; font-weight: 700; padding: 2px 9px; border-radius: 999px; margin-left: 8px; border: 1px solid transparent; letter-spacing: 0.04em; }
+.pw-win { background: var(--success-soft); color: var(--success); border-color: var(--success-border); }
+.pw-loss { background: var(--danger-soft); color: var(--danger); border-color: var(--danger-border); }
+.pw-tie { background: var(--warning-soft); color: var(--warning); border-color: var(--warning-border); }
+.pw-error { background: var(--neutral-soft); color: var(--text-muted); border-color: var(--neutral-border); }
+.stab-wrap { display: inline-flex; align-items: center; gap: 5px; }
+.stab-bar { vertical-align: middle; }
+.stab-label { font-size: 0.8em; color: var(--text-muted); }
+.ascii-range { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85em; letter-spacing: 1px; color: var(--text-muted); margin-left: 6px; white-space: pre; }
+.ascii-range .med { color: var(--accent); font-weight: 700; }
+.sample-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 0.5em; }
+.sample-tab { padding: 3px 10px; font-size: 0.82em; cursor: pointer; border: 1px solid transparent; border-bottom: none; border-radius: 4px 4px 0 0; color: var(--text-muted); background: none; }
+.sample-tab:hover { background: var(--surface-2); }
+.sample-tab[aria-selected="true"] { color: var(--text); background: var(--surface); border-color: var(--border); border-bottom: 2px solid var(--surface); margin-bottom: -2px; font-weight: 600; }
+.sample-tab .tab-score { font-weight: 700; margin-right: 4px; }
+.sample-panel { display: none; }
+.sample-panel.active { display: block; }
+.diff-table { width: 100%; border-collapse: collapse; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82em; table-layout: fixed; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.diff-table td { padding: 1px 6px; vertical-align: top; white-space: pre-wrap; word-wrap: break-word; border: 1px solid var(--border); }
+.diff-table .ln { width: 35px; min-width: 35px; color: var(--text-muted); text-align: right; background: var(--surface-2); user-select: none; white-space: nowrap; }
+.diff-table .left, .diff-table .right { width: calc(50% - 35px); background: var(--surface); }
+.diff-table .sep { width: 1px; padding: 0; background: var(--border-strong); }
+.diff-table tr.mod .left { background: var(--diff-del-bg); }
+.diff-table tr.mod .right { background: var(--diff-add-bg); }
+.diff-table tr.add .right { background: var(--diff-add-bg); }
+.diff-table tr.add .left { background: var(--surface-2); }
+.diff-table tr.del .left { background: var(--diff-del-bg); }
+.diff-table tr.del .right { background: var(--surface-2); }
+.diff-table tr.hdr td { background: var(--diff-hdr-bg); color: var(--text-muted); font-weight: 600; }
+.diff-table .wdel { background: var(--diff-del-strong); border-radius: 2px; padding: 0 2px; }
+.diff-table .wadd { background: var(--diff-add-strong); border-radius: 2px; padding: 0 2px; }
+pre.output { background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 0.9em 1em; font-size: 0.88em; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; color: var(--text); font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.html-preview { width: 100%; height: 80vh; max-height: 2000px; border: 1px solid var(--border-strong); border-radius: 6px; margin: 0.5em 0; background: #fff; color-scheme: light; }
+.section, .analysis { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.3em 1.6em 1.4em; margin: 1.5em 0; box-shadow: var(--shadow); }
+.section > h2:first-child, h2.section-heading { margin: 0 0 0.7em; padding: 0; border: none; font-size: 1.3em; color: var(--accent-strong); letter-spacing: -0.005em; }
+h2.section-heading { margin: 1.8em 0 0.8em; }
+.section-intro { color: var(--text-muted); margin: 0 0 1em; font-size: 0.92em; }
+.section > table:last-child, .section > details:last-child { margin-bottom: 0; }
+.analysis { border-left-width: 5px; margin-bottom: 2em; box-shadow: var(--shadow-strong); }
+.analysis-banner { display: flex; align-items: center; gap: 0.7em; margin-bottom: 0.3em; }
+.analysis-banner h2 { margin: 0; padding: 0; border: none; font-size: 1.4em; color: var(--accent-strong); letter-spacing: -0.005em; }
+.analysis-body h2 { margin-top: 1.6em; padding-bottom: 0.35em; font-size: 1.1em; color: var(--accent-strong); border-bottom: 1px solid var(--border); }
+.analysis-body h2:first-of-type { margin-top: 0; font-size: 1.2em; border-bottom-width: 2px; padding-bottom: 0.4em; border-bottom-color: var(--accent); }
+.analysis-body h3 { margin-top: 1em; color: var(--text-soft); font-size: 1em; }
+.analysis-body li { margin: 0.3em 0; line-height: 1.55; }
+.analysis-body p { line-height: 1.6; }
+.analysis-body code { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-size: 0.88em; font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--text); }
+.analysis-body table { font-size: 0.92em; }
+.analysis-body hr { border: none; border-top: 1px dashed var(--border-strong); margin: 1.4em 0; }
+.section-intro code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+#theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 1000; background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); border-radius: 999px; width: 38px; height: 38px; padding: 0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); transition: background-color .15s ease, transform .15s ease, border-color .15s ease; }
+#theme-toggle:hover { background: var(--surface-2); border-color: var(--accent); transform: scale(1.05); }
+#theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media print {
+  :root { color-scheme: light; --bg: #fff; --surface: #fff; --text: #000; --text-muted: #444; }
+  #theme-toggle { display: none; }
+  .section, .analysis, details.case { box-shadow: none; break-inside: avoid; }
+}
+
+/* Image artifacts */
+.img-artifact { margin: 0.5em 0; }
+.img-artifact img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+.img-label { display: inline-block; font-size: 0.78em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 9px; border-radius: 999px; margin-bottom: 6px; }
+.img-label-gen { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
+.img-label-ref { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-border); }
+.img-label-bl { background: var(--warning-soft); color: var(--warning); border: 1px solid var(--warning-border); }
+
+/* Comparison widget */
+.img-compare { margin: 0.8em 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.img-compare-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.img-compare-tab { padding: 7px 16px; font-size: 0.85em; font-weight: 600; color: var(--text-muted); background: transparent; border: none; cursor: pointer; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; }
+.img-compare-tab:hover { color: var(--text); }
+.img-compare-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.img-compare-panel { display: none; padding: 1em; }
+.img-compare-panel.active { display: block; }
+
+/* Side-by-side */
+.img-compare-sbs { display: flex; gap: 1em; }
+.img-compare-sbs > div { flex: 1; min-width: 0; }
+.img-compare-sbs img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: 4px; background: #fff; }
+
+/* Swipe */
+.img-compare-swipe-imgs { display: grid; border: 1px solid var(--border); border-radius: 4px; background: #fff; overflow: hidden; }
+.img-compare-swipe-imgs > img { grid-area: 1/1; display: block; width: 100%; height: auto; }
+.img-compare-swipe-imgs .swipe-ref { grid-area: 1/1; z-index: 1; background: #fff; clip-path: inset(0 50% 0 0); }
+.img-compare-swipe-imgs .swipe-ref img { display: block; width: 100%; height: auto; }
+.img-compare-swipe-imgs .swipe-line { grid-area: 1/1; z-index: 2; justify-self: start; width: 3px; background: var(--accent); pointer-events: none; margin-left: 50%; }
+.img-compare-swipe input[type="range"] { display: block; width: 100%; margin: 8px 0 0; accent-color: var(--accent); }
+.img-compare-swipe-labels { display: flex; justify-content: space-between; padding: 4px 1em; font-size: 0.82em; color: var(--text-muted); }
+
+/* Onion */
+.img-compare-onion-wrap { display: grid; border: 1px solid var(--border); border-radius: 4px; background: #fff; overflow: hidden; }
+.img-compare-onion-wrap > img { grid-area: 1/1; display: block; width: 100%; height: auto; }
+.img-compare-onion-wrap .onion-top { grid-area: 1/1; background: #fff; }
+.img-compare-onion-wrap .onion-top img { display: block; width: 100%; height: auto; }
+.img-compare-onion input[type="range"] { display: block; width: 100%; margin: 8px 0 0; accent-color: var(--accent); }
+.img-compare-onion .onion-label { text-align: center; font-size: 0.82em; color: var(--text-muted); margin-top: 2px; }
+
+/* Diagram source collapsible */
+/* Metrics table */
+.metrics-table { font-size: 0.88em; margin: 0.5em 0; border-collapse: collapse; }
+.metrics-table th { text-align: left; padding: 4px 12px; background: var(--surface-2); border-bottom: 1px solid var(--border); font-weight: 600; color: var(--text-soft); }
+.metrics-table td { padding: 4px 12px; border-bottom: 1px solid var(--border); }
+.metrics-table td:last-child { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-weight: 600; }
+
+.diagram-source { margin-top: 0.4em; }
+.diagram-source summary { font-size: 0.85em; color: var(--text-muted); cursor: pointer; padding: 4px 0; }
+.diagram-source summary:hover { color: var(--text); }
+.diagram-source pre { max-height: 400px; overflow-y: auto; }
+</style>
+</head>
+<body>
+<button id="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+<header class="report-header">
+  <h1>Skill Eval Report</h1>
+  <div class="header-meta"><span class="meta-chip"><span class="meta-label">Skill</span><code>rfe.speedrun</code></span><span class="meta-chip"><span class="meta-label">Run</span><code>2026-06-21-nemotron3-super</code></span><span class="meta-chip"><span class="meta-label">Date</span>2026-06-21 11:53</span></div>
+</header>
+<section class="section">
+<h2>Run Configuration</h2>
+<dl class="config-grid">
+<div class="kv"><dt>Model</dt><dd>nemotron3-super</dd></div>
+<div class="kv"><dt>Subagent Model</dt><dd>—</dd></div>
+<div class="kv"><dt>Agent</dt><dd>harbor:claude-code</dd></div>
+<div class="kv"><dt>Agent Version</dt><dd>2.1.181</dd></div>
+<div class="kv"><dt>Duration</dt><dd>3 min</dd></div>
+<div class="kv"><dt>Cost</dt><dd>$4.41</dd></div>
+<div class="kv"><dt>Turns</dt><dd>10</dd></div>
+<div class="kv"><dt>Exit Code</dt><dd>0</dd></div>
+</dl>
+<h3 class="subsection-heading">Model Usage</h3>
+<table class="usage-table">
+<tr><th></th><th>Total</th></tr>
+<tr><th>Input tokens (total)</th><td><span class="cur-val">226,906</span></td></tr>
+<tr><th>Output tokens</th><td><span class="cur-val">2,902</span></td></tr>
+<tr><th>Cache read</th><td><span class="cur-val">—</span></td></tr>
+<tr><th>Cache write</th><td><span class="cur-val">—</span></td></tr>
+<tr><th>Cache hit</th><td><span class="cur-val">0.0%</span></td></tr>
+<tr><th>Cost</th><td><span class="cur-val">$4.41</span></td></tr>
+<tr><th>Cost / turn</th><td><span class="cur-val">$0.4412</span></td></tr>
+<tr><th>Output tokens / turn</th><td><span class="cur-val">290</span></td></tr>
+<tr><th>Cost / Mtok</th><td><span class="cur-val">$19.20</span></td></tr>
+</table>
+</section>
+<section class="section">
+<h2>Scoring Summary</h2>
+<table>
+<tr><th>Judge</th><th>Type</th><th>Metric</th><th>Value</th><th>Threshold</th><th>Status</th></tr>
+<tr class="metric-row"><td>architecture_context_used</td><td class="judge-type">check</td><td>pass_rate</td><td>0%</td><td>&ge; 100%</td><td><span class="fail">FAIL</span></td></tr>
+<tr class="metric-row"><td>files_exist</td><td class="judge-type">check</td><td>pass_rate</td><td>0%</td><td>&ge; 100%</td><td><span class="fail">FAIL</span></td></tr>
+<tr class="metric-row"><td>frontmatter_valid</td><td class="judge-type">check</td><td>pass_rate</td><td>0%</td><td>&ge; 100%</td><td><span class="fail">FAIL</span></td></tr>
+<tr class="metric-row"><td>pipeline_flow</td><td class="judge-type">check</td><td>pass_rate</td><td>100%</td><td>&ge; 100%</td><td><span class="pass">PASS</span></td></tr>
+<tr class="metric-row"><td>recommendation_consistency</td><td class="judge-type">check</td><td>pass_rate</td><td>0%</td><td>&ge; 100%</td><td><span class="fail">FAIL</span></td></tr>
+<tr class="metric-row"><td>revision_quality</td><td class="judge-type">llm (claude-opus-4-6)</td><td>mean</td><td>3.00</td><td>&ge; 3.5</td><td><span class="fail">FAIL</span></td></tr>
+<tr class="metric-row"><td>rfe_quality</td><td class="judge-type">llm (claude-opus-4-6)</td><td>mean</td><td>3.00</td><td>&ge; 3.5</td><td><span class="fail">FAIL</span></td></tr>
+<tr class="metric-row"><td>run_report_exists</td><td class="judge-type">check</td><td>pass_rate</td><td>0%</td><td>&ge; 100%</td><td><span class="fail">FAIL</span></td></tr>
+</table>
+</section>
+<section class="section">
+<h2>Regressions</h2>
+<table>
+<tr><th>Judge</th><th>Metric</th><th>Threshold</th><th>Actual</th></tr>
+<tr><td>files_exist</td><td>pass_rate</td><td>>= 100%</td><td><span class="fail">0%</span></td></tr>
+<tr><td>frontmatter_valid</td><td>pass_rate</td><td>>= 100%</td><td><span class="fail">0%</span></td></tr>
+<tr><td>run_report_exists</td><td>pass_rate</td><td>>= 100%</td><td><span class="fail">0%</span></td></tr>
+<tr><td>recommendation_consistency</td><td>pass_rate</td><td>>= 100%</td><td><span class="fail">0%</span></td></tr>
+<tr><td>architecture_context_used</td><td>pass_rate</td><td>>= 100%</td><td><span class="fail">0%</span></td></tr>
+<tr><td>rfe_quality</td><td>mean</td><td>>= 3.5</td><td><span class="fail">3.00</span></td></tr>
+<tr><td>revision_quality</td><td>mean</td><td>>= 3.5</td><td><span class="fail">3.00</span></td></tr>
+</table>
+</section>
+<section class="section">
+<h2>Shared Outputs</h2>
+<p class="section-intro">These files are shared across all cases (not repeated per-case below).</p>
+</section>
+<h2 class="section-heading">Per-Case Details</h2>
+<details open class="case case-fail"><summary><span class="fail">case-001-model-signature-verific</span> <span class="skip">(1/8 pass)</span></summary>
+<table><tr><th>Judge</th><th>Value</th><th>Rationale</th></tr>
+<tr><td>architecture_context_used</td><td><span class="fail">FAIL</span></td><td class="rationale"><p>No feasibility files found</p></td></tr>
+<tr><td>files_exist</td><td><span class="fail">FAIL</span></td><td class="rationale"><p>No review files in artifacts/rfe-reviews/</p></td></tr>
+<tr><td>frontmatter_valid</td><td><span class="fail">FAIL</span></td><td class="rationale"><p>No review files to check</p></td></tr>
+<tr><td>pipeline_flow</td><td><span class="pass">PASS</span></td><td class="rationale"><p>Phases: create, auto-fix, submit</p></td></tr>
+<tr><td>recommendation_consistency</td><td><span class="fail">FAIL</span></td><td class="rationale"><p>No review files to check</p></td></tr>
+<tr><td>revision_quality</td><td><span class="fail">3</span></td><td class="rationale"><p>Without access to the original RFE (artifacts/rfe-originals/RFE-001.md) and the review file (artifacts/rfe-reviews/RFE-001.md), I must evaluate based solely on the revised artifact provided.</p>
+<p>Looking at the revised RFE-001.md itself, it is reasonably well-structured with clear sections for Problem Statement, Business Justification, User Problem, Success Criteria, and Acceptance Criteria. The Problem Statement is vivid and well-articulated ("security theater" is a strong framing). The Acceptance Criteria are specific and testable — covering KServe, llm-d, S3-stored models, OCI ModelCar images, failure handling, and performance impact.</p>
+<p>However, there are some concerns:</p>
+<ol>
+<li><strong>Missing review/original context</strong>: I cannot verify whether critical content was lost or whether the revision was genuinely beneficial versus cosmetic. The frontmatter shows <code>parent_key: null</code> and <code>original_labels: null</code>, which may indicate metadata was stripped or not carried forward.</li>
+<li><strong>The RFE quality as-is is decent but not exceptional</strong>: The Business Justification is somewhat generic ("false sense of security" repeats the Problem Statement rather than providing quantitative business impact or citing specific customer requirements). The Success Criteria section reads more like a summary than measurable criteria (no metrics, timelines, or specific thresholds for "does not significantly impact serving performance").</li>
+<li><strong>Some acceptance criteria contain vague language</strong>: "does not significantly impact serving performance" lacks a concrete threshold (e.g., &lt; 5% latency increase). "Transparent to users" is subjective.</li>
+<li><strong>The status is still "Draft"</strong> which is appropriate but the size "L" and priority "Critical" are present without supporting justification for why those specific values were chosen.</li>
+</ol>
+<p>Given that I cannot fully compare original vs. revised, and the resulting RFE is functional but has room for improvement in measurability and business justification specificity, I score this a 3 — the output is acceptable but shows mixed quality with some areas that could have been strengthened further.</p></td></tr>
+<tr><td>rfe_quality</td><td><span class="fail">3</span></td><td class="rationale"><p><strong>Assessment across quality criteria:</strong></p>
+<p><strong>1. Clear business need (WHAT) — user-centric, not task-like:</strong> The RFE does articulate a clear need: end-to-end integrity verification for signed models at serving time. The problem statement is well-written and frames it from the user's perspective — they sign models but have no assurance the served model matches. However, the title "Enforce signature verification at serving time for KServe and llm-d" reads somewhat task-like, naming specific systems where work should happen. The problem statement compensates for this somewhat. Score: Moderate.</p>
+<p><strong>2. Justified with evidence (WHY) — named customers, revenue impact:</strong> This is a notable weakness. The business justification is generic — it speaks abstractly about "organizations investing in model signing" and a "false sense of security." There are no named customers, no revenue impact, no market data, no compliance requirements cited, no competitive pressure mentioned. The justification is logical but entirely hypothetical. The phrase "security theater" is colorful but not evidence. Score: Weak.</p>
+<p><strong>3. Not prescribe implementation (no HOW):</strong> This is where the RFE has mixed results. The acceptance criteria mention specific implementation details: "S3-stored models with accompanying model.sig files," "OCI ModelCar images with Cosign signatures," and specific tools (KServe, llm-d, Cosign). While some platform vocabulary is acceptable, specifying "model.sig files" and "Cosign signatures" as the verification mechanisms is prescriptive. It constrains the solution space rather than describing the desired outcome. Score: Moderate-to-weak.</p>
+<p><strong>4. Describes a need, not an activity (Not a Task):</strong> The core RFE describes a need (ensuring served models match signed artifacts), which is good. However, the acceptance criteria lean toward task descriptions ("enable signature verification for models served via KServe"). The overall framing is more need-oriented than task-oriented. Score: Moderate.</p>
+<p><strong>5. Right-sized for a single strategy feature:</strong> The scope covers verification across two serving platforms (KServe and llm-d) with two storage formats (S3 and OCI). This could arguably be two features, but they share the same strategic goal. It seems reasonably sized for a single feature. Score: Good.</p>
+<p><strong>Pipeline calibration:</strong> Without access to the review/scores file, I cannot directly verify the pipeline's self-assessed rubric scores. However, based on the content, I would expect:</p>
+<ul>
+<li>what: 1-2 (decent problem statement but slightly task-flavored)</li>
+<li>why: 0-1 (no concrete evidence, customers, or revenue impact)</li>
+<li>open_to_how: 1 (mentions specific tools like Cosign and model.sig files)</li>
+<li>not_a_task: 1-2 (mostly need-oriented but acceptance criteria are task-like)</li>
+<li>right_sized: 2 (reasonable scope)</li>
+</ul>
+<p><strong>Overall:</strong> The RFE has a well-articulated problem statement and reasonable acceptance criteria, but it suffers from lack of concrete business evidence (no customers, no revenue/compliance drivers), and it prescribes some implementation details (Cosign, model.sig files). It's adequate but has noticeable quality gaps, particularly in justification evidence and implementation prescription.</p></td></tr>
+<tr><td>run_report_exists</td><td><span class="fail">FAIL</span></td><td class="rationale"><p>No run report YAML found</p></td></tr>
+</table>
+<details open><summary>Input</summary><pre class="output">clarifying_context: 'Customers: Financial services institutions (FSI segment), government agencies, and regulated industry
+  customers requiring verifiable model provenance for compliance and governance requirements
+
+  Business justification: Strategic investment — model supply chain security is core to RHOAI trust strategy. The ''sign on
+  store'' capability was already delivered via STRAT-101; without ''verify on serve'', that investment doesn''t deliver
+  its intended runtime integrity value. Customers in regulated industries are demanding end-to-end verifiable model provenance.
+  This is also a competitive differentiator in the enterprise AI platform market, with upstream Sigstore ecosystem projects
+  (ImagePolicy controller, Model Validation operator) providing building blocks.
+
+  User problem: Users who carefully sign AI models during storage have no assurance that the model actually being served matches
+  what they signed. Admins have no guidance on how to set up Red Hat Trusted Artifact Signer with OpenShift AI to ensure model
+  signatures are verified for deployed inference workloads. Signatures are completely ignored at serving time, making the
+  existing signing workflow incomplete for runtime integrity guarantees.
+
+  Scope: Single focused need — signature verification enforcement at model serving time. Covers two model source formats:
+  (1) models stored in S3/HuggingFace with model.sig (OpenSSF Model Signature), and (2) OCI ModelCar images with Cosign signatures
+  and embedded OpenSSF Model Signatures. Verification must integrate with KServe and llm-d serving infrastructure. Policy
+  flexibility needed (hard-stop vs. warning-only).
+
+  Success criteria: Admins can configure signature verification policies for model serving. Models from S3/HuggingFace with
+  model.sig are verified before serving. OCI ModelCar images are verified (container image signature and/or embedded OpenSSF
+  Model Signature) before serving. Clear pass/fail feedback is provided to both admins and users when verification fails.
+  Policy-driven enforcement allows admins to choose between blocking deployment or issuing warnings. The end-to-end story
+  — sign on store, verify on serve — provides a complete trust chain for AI model provenance.'
+priority: Critical
+prompt: We already invested in model signing at storage time through AI Hub and Trusted Artifact Signer, but there's no verification
+  happening when those models are actually served via KServe or llm-d. This means the entire signing workflow is basically
+  security theater — users sign their models but have zero assurance that what's being served matches what they signed. We
+  need to close this gap by enforcing signature verification at serving time, supporting both S3-stored models with model.sig
+  files and OCI ModelCar images with Cosign signatures.</pre></details>
+<details open><summary>Output files</summary>
+<div class="file-badge">artifacts/.rfe-id-lock <span class="skip">(0 bytes, binary)</span></div>
+<div class="file-badge">artifacts/rfe-tasks/RFE-001.md</div>
+<pre class="output">---
+rfe_id: RFE-001
+title: Enforce signature verification at serving time for KServe and llm-d
+priority: Critical
+size: L
+status: Draft
+parent_key: null
+original_labels: null
+---
+## Problem Statement
+We already invested in model signing at storage time through AI Hub and Trusted Artifact Signer, but there's no verification happening when those models are actually served via KServe or llm-d. This means the entire signing workflow is basically security theater — users sign their models but have zero assurance that what's being served matches what they signed.
+
+## Business Justification
+The current model signing implementation provides a false sense of security. Organizations investing in model signing expect end-to-end integrity verification, but without serving-time verification, signed models could be tampered with between storage and serving, compromising security guarantees.
+
+## User Problem
+Users cannot trust that the models being served in production are identical to the models they signed and approved for deployment. This creates a security gap where malicious actors could potentially alter models after signing but before serving, leading to compromised model behavior in production.
+
+## Success Criteria
+Users will have cryptographic verification that models served via KServe or llm-d match the originally signed artifacts, providing end-to-end integrity assurance for the model lifecycle.
+
+## Acceptance Criteria
+- Users can enable signature verification for models served via KServe
+- Users can enable signature verification for models served via llm-d
+- The system supports verification of S3-stored models with accompanying model.sig files
+- The system supports verification of OCI ModelCar images with Cosign signatures
+- Verification failures result in the model not being served and appropriate error logging
+- The verification process is transparent to users and does not significantly impact serving performance</pre>
+<div class="file-badge">artifacts/rfes.md</div>
+<pre class="output"># RFE Summary
+
+| ID | Title | Priority | Size | Score | Rec | Status |
+|-----|-------|----------|------|-------|-----|--------|
+| RFE-001 | Enforce signature verification at serving time for KServe and llm-d | Critical | L | — | — | Draft |</pre>
+</details>
+</details>
+
+<script>
+(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  function paint() {
+    var t = document.documentElement.getAttribute('data-theme') || 'light';
+    btn.textContent = t === 'dark' ? '\u2600' : '\u263E';
+    btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    btn.title = btn.getAttribute('aria-label');
+  }
+  btn.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('eval-report-theme', next); } catch (e) {}
+    paint();
+  });
+  paint();
+})();
+</script>
+<script>
+(function () {
+  document.querySelectorAll('.img-compare').forEach(function (widget) {
+    var tabs = widget.querySelectorAll('.img-compare-tab');
+    var panels = widget.querySelectorAll('.img-compare-panel');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        panels.forEach(function (p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        var target = widget.querySelector('#' + tab.dataset.panel);
+        if (target) target.classList.add('active');
+      });
+    });
+    var swipe = widget.querySelector('.img-compare-swipe');
+    if (swipe) {
+      (function (sw) {
+        var sl = sw.querySelector('input[type="range"]');
+        var ref = sw.querySelector('.swipe-ref');
+        var ln = sw.querySelector('.swipe-line');
+        if (sl && ref) {
+          function update() {
+            var p = sl.value;
+            ref.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)';
+            if (ln) ln.style.marginLeft = p + '%';
+          }
+          sl.addEventListener('input', update);
+          update();
+        }
+      })(swipe);
+    }
+    var onion = widget.querySelector('.img-compare-onion');
+    if (onion) {
+      (function (on) {
+        var sl = on.querySelector('input[type="range"]');
+        var top = on.querySelector('.onion-top');
+        var lbl = on.querySelector('.onion-label');
+        if (sl && top) {
+          function update() {
+            top.style.opacity = sl.value / 100;
+            if (lbl) lbl.textContent = 'Generated opacity: ' + sl.value + '%';
+          }
+          sl.addEventListener('input', update);
+          update();
+        }
+      })(onion);
+    }
+  });
+})();
+</script>
+<script>
+(function () {
+  document.querySelectorAll('.sample-tabs').forEach(function (bar) {
+    bar.querySelectorAll('.sample-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var group = tab.closest('td');
+        group.querySelectorAll('.sample-tab').forEach(function (t) {
+          t.setAttribute('aria-selected', 'false');
+        });
+        group.querySelectorAll('.sample-panel').forEach(function (p) {
+          p.classList.remove('active');
+        });
+        tab.setAttribute('aria-selected', 'true');
+        var target = group.querySelector('#' + tab.dataset.panel);
+        if (target) target.classList.add('active');
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

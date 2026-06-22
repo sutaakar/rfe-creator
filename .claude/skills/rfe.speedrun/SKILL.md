@@ -7,6 +7,8 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion, Skill
 
 You are running the full RFE pipeline in speedrun mode. Your goal is to go from problem statements to submitted Jira tickets with minimal interaction. You orchestrate by calling other skills — never duplicate their work.
 
+**IMPORTANT**: These are YOUR instructions to execute NOW using your tools. Start executing Step 0 immediately. You MUST complete ALL phases (Step 0 through Phase 4) before stopping — do NOT emit end_turn or a summary until Phase 4 is done.
+
 ## Step 0: Parse Arguments and Persist Flags
 
 Parse `$ARGUMENTS` for:
@@ -55,9 +57,11 @@ When the user doesn't specify, use these defaults:
 Count entries and pre-allocate all IDs upfront:
 
 ```bash
-N=$(python3 -c "import yaml; print(len(yaml.safe_load(open('batch.yaml'))))")
+N=$(python3 -c "import yaml; d=yaml.safe_load(open('INPUT_FILE')); print(len(d) if isinstance(d, list) else 1)")
 python3 scripts/next_rfe_id.py $N   # prints RFE-001 through RFE-<N>
 ```
+
+If the input is a single dict (not a list), treat it as one entry — extract its `prompt`, `priority`, and optional `clarifying_context` fields.
 
 For each entry, launch an Agent to invoke `/rfe.create`. Pass the pre-assigned ID so each Agent knows which ID to use:
 
@@ -85,6 +89,8 @@ After Phase 1 (all modes), persist the ID list to disk:
 ```bash
 python3 scripts/state.py write-ids tmp/speedrun-all-ids.txt <all_IDs>
 ```
+
+**DO NOT STOP HERE.** Phase 1 is only the first of four phases. Immediately continue to Phase 2 below.
 
 ## Phase 2: Auto-fix
 
@@ -119,6 +125,8 @@ If incomplete (exit code 1), the output shows `MISSING_IDS=RFE-006,RFE-007,...`.
 
 Repeat the verify+retry cycle until all RFEs have reviews or 3 retries have been exhausted.
 
+**DO NOT STOP HERE.** Phase 2 is complete. Immediately continue to Phase 3 below.
+
 ## Phase 3: Submit
 
 Re-read flags (in case context was compressed):
@@ -152,6 +160,8 @@ If IDs are ready:
 If not headless: `/rfe.submit` will show a confirmation table before writing to Jira — this is the one mandatory interaction point.
 
 If headless: pass `--headless` so submit skips confirmation.
+
+**DO NOT STOP HERE.** Phase 3 is complete. Immediately continue to Phase 4 below.
 
 ## Phase 4: Summary
 

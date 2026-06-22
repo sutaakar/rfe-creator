@@ -35,7 +35,24 @@ Write `artifacts/rfe-reviews/{ID}-review.md` with this body structure:
 
 ## Step 4: Set Frontmatter
 
-Parse the score table from the assessment result file. Determine recommendation:
+Parse the score table from the assessment result file using Python (not sed/awk — tables are fragile to parse with shell tools):
+
+```bash
+python3 -c "
+import re, sys
+text = open('{ASSESS_PATH}').read()
+scores = {}
+for line in text.split('\n'):
+    m = re.match(r'\|\s*(WHAT|WHY|Open to HOW|Not a task|Right-sized|Total)\s*\|\s*(\d+)', line)
+    if m:
+        key = m.group(1).lower().replace(' ', '_').replace('-', '_')
+        scores[key] = int(m.group(2))
+for k, v in scores.items():
+    print(f'{k}={v}')
+"
+```
+
+Use the printed values below. Determine recommendation:
 - submit: RFE passes (7+ with no zeros)
 - revise: RFE fails but can be improved
 - split: right_sized scored 0/2, OR scored 1/2 AND capabilities serve different customer segments. BUT only if no OTHER criterion scored 0/2 — splitting an RFE that has a zero on what/why/open_to_how/not_a_task just produces more RFEs with the same unfixable problem. Recommend revise instead.

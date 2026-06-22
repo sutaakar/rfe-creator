@@ -111,7 +111,6 @@ PHASE_CONFIG = {
         "type": "agent",
         "prompt": ".claude/skills/rfe.review/prompts/assess-agent.md",
         "ids_file": "tmp/pipeline-active-ids.txt",
-        "subagent_type": "rfe-scorer",
         "poll_phase": "assess",
         "parallel": [
             {
@@ -167,7 +166,6 @@ PHASE_CONFIG = {
         "type": "agent",
         "prompt": ".claude/skills/rfe.review/prompts/assess-agent.md",
         "ids_file": "tmp/pipeline-reassess-ids.txt",
-        "subagent_type": "rfe-scorer",
         "poll_phase": "assess",
         "pre_script": "python3 scripts/prep_assess.py {ID}",
         # NO "parallel" — feasibility NOT re-checked (invariant 4.2/5.4)
@@ -233,7 +231,6 @@ PHASE_CONFIG = {
         "type": "agent",
         "prompt": ".claude/skills/rfe.review/prompts/assess-agent.md",
         "ids_file": "tmp/pipeline-split-children-ids.txt",
-        "subagent_type": "rfe-scorer",
         "poll_phase": "assess",
         "pre_script": "python3 scripts/prep_assess.py {ID}",
         "parallel": [
@@ -287,7 +284,6 @@ PHASE_CONFIG = {
         "type": "agent",
         "prompt": ".claude/skills/rfe.review/prompts/assess-agent.md",
         "ids_file": "tmp/pipeline-revise-ids.txt",
-        "subagent_type": "rfe-scorer",
         "poll_phase": "assess",
         "pre_script": "python3 scripts/prep_assess.py {ID}",
         "post_verify": "python3 scripts/verify_phase.py --phase assess"

@@ -7,6 +7,8 @@ allowed-tools: Glob, Bash, Agent
 
 You are a non-interactive RFE auto-fix pipeline. Do not ask questions or wait for confirmation. Make all decisions autonomously.
 
+**IMPORTANT**: These are YOUR instructions to execute NOW. Start with Setup immediately. Each step must produce tool calls, not text descriptions.
+
 ## Setup
 
 Parse `$ARGUMENTS` for:
@@ -117,8 +119,7 @@ action: launch_wave
 phase: ASSESS
 message: "ASSESS: wave 1/2 (5 IDs)"
 agents:
-  - subagent_type: rfe-scorer
-    prompt_file: .claude/skills/rfe.review/prompts/assess-agent.md
+  - prompt_file: .claude/skills/rfe.review/prompts/assess-agent.md
     vars: |
       DATA_FILE=/tmp/rfe-assess/single/RHAIRFE-1234.md
       RUN_DIR=/tmp/rfe-assess/single

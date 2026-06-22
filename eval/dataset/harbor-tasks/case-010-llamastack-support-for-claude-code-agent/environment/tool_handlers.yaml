@@ -1,0 +1,36 @@
+handlers:
+- match: "Questions asked to the user via AskUserQuestion \u2014 typically\nclarifying\
+    \ questions during rfe.create (customer segment,\nbusiness impact, problem definition,\
+    \ distinctness, success metrics).\n"
+  patterns:
+  - AskUserQuestion
+  prompt: 'Answer based on the test case context in input.yaml.
+
+    Use the ''clarifying_context'' field for customer segments,
+
+    business justification, and scope details.
+
+    Use the ''prompt'' field for the core problem statement.
+
+    Default: pick the first option or answer "yes" for confirmations.
+
+    '
+- match: "Any interaction with Jira \u2014 whether via MCP tools\n(mcp__atlassian__*),\
+    \ Bash scripts calling the Jira REST API\n(scripts/submit.py, scripts/fetch_issue.py),\
+    \ or any HTTP\nrequests to a Jira server.\n"
+  patterns:
+  - Bash
+  - mcp__atlassian__*
+  prompt: 'The skill runs with --dry-run so Jira writes are skipped.
+
+    For reads/fetches: use input.yaml fields `prompt` and
+
+    `clarifying_context` to synthesize the issue description.
+
+    Jira fetches should not be needed in batch mode.
+
+    If a Jira fetch is attempted, return a merged description
+
+    built from `prompt` + `clarifying_context`.
+
+    '

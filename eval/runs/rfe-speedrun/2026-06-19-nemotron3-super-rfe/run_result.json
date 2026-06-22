@@ -1,0 +1,19 @@
+{
+  "exit_code": 0,
+  "execution_mode": "harbor",
+  "agent": "harbor:claude-code",
+  "agent_version": "2.1.181",
+  "model": "nemotron3-super-rfe",
+  "num_cases": 1,
+  "num_turns": 9,
+  "duration_s": 95.786976,
+  "mean_reward": 0.0,
+  "cost_usd": 1.75089,
+  "token_usage": {
+    "input": 193189,
+    "output": 3398,
+    "cache_read": 0,
+    "cache_create": 0
+  },
+  "harbor_job_dir": "tmp/harbor-jobs/2026-06-19__18-49-05"
+}
